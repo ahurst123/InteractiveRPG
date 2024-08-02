@@ -5,28 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Character Movement with Sprite</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            background-color: #f0f0f0;
-        }
-        .container {
-            position: relative;
-            width: 800px; /* Adjust width as needed */
-            height: 400px; /* Adjust height as needed */
-            background-color: #fff;
-            border: 1px solid #ccc;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
         :root {
             --pixel-size: 6;
         }
+
+        body {
+            background: #96ffc1;
+        }
+
         .Character {
             width: calc(32px * var(--pixel-size));
             height: calc(32px * var(--pixel-size));
@@ -34,96 +20,50 @@
             position: relative;
             margin: 4em auto;
         }
+
         .Character_spritesheet {
-            width: calc(128px * var(--pixel-size)); /* Width of the sprite sheet */
-            height: calc(32px * var(--pixel-size)); /* Height of one row */
-            background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png'); /* Sprite sheet URL */
-            background-size: calc(128px * var(--pixel-size)) calc(32px * var(--pixel-size)); /* Total size of the sprite sheet */
+            animation: moveSpritesheet 1s steps(4) infinite;
+            width: calc(128px * var(--pixel-size));
             position: absolute;
-            top: 0;
-            left: 0;
-            transition: transform 0.3s ease;
         }
+
         .Character_shadow {
             position: absolute;
             width: calc(32px * var(--pixel-size));
             height: calc(32px * var(--pixel-size));
         }
+
         .pixelart {
             image-rendering: pixelated;
         }
+
         .face-right {
-            animation: runRight 1s steps(4) infinite;
-            transform: scaleX(1); /* Facing right */
+            top: calc(-32px * var(--pixel-size));
+        }
+        .face-up {
+            top: calc(-64px * var(--pixel-size));
         }
         .face-left {
-            animation: runLeft 1s steps(4) infinite;
-            transform: scaleX(-1); /* Facing left */
+            top: calc(-96px * var(--pixel-size));
         }
-        @keyframes runRight {
-            from { background-position: 0; }
-            to { background-position: -128px; } /* Adjust based on your sprite sheet width */
-        }
-        @keyframes runLeft {
-            from { background-position: 0; }
-            to { background-position: 128px; } /* Adjust based on your sprite sheet width */
-        }
-        .controls {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-        }
-        .button {
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            margin: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
+
+        @keyframes moveSpritesheet {
+            from {
+                transform: translate3d(0px, 0, 0);
+            }
+            to {
+                transform: translate3d(-100%, 0, 0);
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="Character">
-            <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" />
-            <div class="Character_spritesheet pixelart face-right" id="character"></div>
-        </div>
-        <div class="controls">
-            <button class="button" onclick="moveLeft()">Left</button>
-            <button class="button" onclick="moveRight()">Right</button>
-        </div>
+    <div class="Character">
+        <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" />
+        <img class="Character_spritesheet pixelart face-right" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" />
     </div>
-
-    <script>
-        const character = document.getElementById('character');
-        const container = document.querySelector('.container');
-        const containerWidth = container.clientWidth;
-        const characterWidth = character.clientWidth;
-        let position = (containerWidth - characterWidth) / 2; // Center the character horizontally
-
-        // Initialize character position
-        character.style.left = position + 'px';
-
-        function moveLeft() {
-            position -= 10; // Move left by 10px
-            if (position < 0) position = 0; // Prevent moving out of bounds
-            character.style.left = position + 'px';
-            character.classList.remove('face-right');
-            character.classList.add('face-left');
-        }
-
-        function moveRight() {
-            position += 10; // Move right by 10px
-            const maxPosition = containerWidth - characterWidth;
-            if (position > maxPosition) position = maxPosition; // Prevent moving out of bounds
-            character.style.left = position + 'px';
-            character.classList.remove('face-left');
-            character.classList.add('face-right');
-        }
-    </script>
 </body>
+<script>
+    
+</script>
 </html>
