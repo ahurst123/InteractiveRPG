@@ -60,10 +60,21 @@
 <body>
     <div class="Character">
         <img class="Character_shadow pixelart" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacterShadow.png" alt="Shadow" />
-        <img class="Character_spritesheet pixelart face-right" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" />
+        <img id="character" class="Character_spritesheet pixelart face-right" src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/21542/DemoRpgCharacter.png" alt="Character" />
     </div>
+    <button onclick="toggleDirection()">Toggle Direction</button>
+
+    <script>
+        function toggleDirection() {
+            const character = document.getElementById('character');
+            if (character.classList.contains('face-left')) {
+                character.classList.remove('face-left');
+                character.classList.add('face-right');
+            } else {
+                character.classList.remove('face-right');
+                character.classList.add('face-left');
+            }
+        }
+    </script>
 </body>
-<script>
-    
-</script>
 </html>
